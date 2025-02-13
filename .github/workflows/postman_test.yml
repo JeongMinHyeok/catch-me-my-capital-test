@@ -33,7 +33,4 @@ jobs:
       - name: Run Collection
         run: |
           postman collection run ${{ matrix.config.collection_id }} \
-            --environment ${{ matrix.config.environment_id }} \
-        with:
-          name: report-${{ matrix.config.collection_id }}
-          path: report-${{ matrix.config.collection_id }}.json
+            --environment ${{ matrix.config.environment_id }}
