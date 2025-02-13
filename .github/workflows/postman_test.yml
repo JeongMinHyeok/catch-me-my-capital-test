@@ -23,6 +23,12 @@ jobs:
       - name: Setup Node.js and Postman CLI
         run: |
           npm install -g postman-cli
+
+      # Postman CLI 설치
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+
       
       # Newman 실행 및 HTML 리포트 생성 
       - name: Run Collection and Generate Report
