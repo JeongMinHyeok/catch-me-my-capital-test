@@ -29,17 +29,11 @@ jobs:
         run: |
           postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
 
-      # Postman CLI 실행 및 리포트 생성
-      - name: Run Collection and Generate Report
+      # Postman CLI 실행
+      - name: Run Collection
         run: |
           postman collection run ${{ matrix.config.collection_id }} \
             --environment ${{ matrix.config.environment_id }} \
-            --reporters cli,json-summary \
-            --reporter-json-summary-export report-${{ matrix.config.collection_id }}.json
-
-      # HTML 리포트 업로드 (Artifacts)
-      - name: Upload Report Artifact for ${{ matrix.config.collection_id }}
-        uses: actions/upload-artifact@v4
         with:
           name: report-${{ matrix.config.collection_id }}
           path: report-${{ matrix.config.collection_id }}.json
