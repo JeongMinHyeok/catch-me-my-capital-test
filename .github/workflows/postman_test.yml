@@ -27,14 +27,15 @@ jobs:
       # Newman 실행 및 HTML 리포트 생성 
       - name: Run Collection and Generate Report
         run: |
-          postman collection run ${{ matrix.collection_id }} \
+          postman collection run ${{ matrix.config.collection_id }} \
             --api-key ${{ secrets.POSTMAN_API_KEY }} \
+            --environment ${{ matrix.config.environment_id }} \
             --reporters cli,json-summary \
             --reporter-json-summary-export report-${{ matrix.collection_id }}.json
       
       # HTML 리포트 업로드 (Artifacts)
-      - name: Upload Report Artifact for ${{ matrix.collection_id }}
+      - name: Upload Report Artifact for ${{ matrix.config.collection_id }}
         uses: actions/upload-artifact@v4
         with:
-          name: report-${{ matrix.collection_id }}
-          path: report-${{ matrix.collection_id }}.json 
+          name: report-${{ matrix.config.collection_id }}
+          path: report-${{ matrix.config.collection_id }}.json 
