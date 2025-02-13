@@ -11,37 +11,35 @@ jobs:
     strategy:
       matrix:
         config:
-          - {collection_id: "40443175-0e230280-1eea-45ad-b7e4-2c6316a91b62", environment_id: "40443175-1c302d5e-5930-4579-880f-ce404a2c4b29"}
-          - {collection_id: "40443175-85560488-42ec-4d0e-b866-fda8ca231b15", environment_id: "40443175-55f8a2ab-0dc1-48a9-8279-59b370c19d78"}
+          - { collection_id: "40443175-0e230280-1eea-45ad-b7e4-2c6316a91b62", environment_id: "40443175-1c302d5e-5930-4579-880f-ce404a2c4b29" }
+          - { collection_id: "40443175-85560488-42ec-4d0e-b866-fda8ca231b15", environment_id: "40443175-55f8a2ab-0dc1-48a9-8279-59b370c19d78" }
 
     steps:
       # 코드 체크아웃
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Node.js 설치 및 Postman CLI 설치
-      - name: Setup Node.js and Postman CLI
-        run: |
-          npm install -g postman-cli
-
       # Postman CLI 설치
       - name: Install Postman CLI
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
-      
-      # Newman 실행 및 HTML 리포트 생성 
+      # Postman CLI 로그인
+      - name: Login to Postman CLI
+        run: |
+          postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+
+      # Postman CLI 실행 및 리포트 생성
       - name: Run Collection and Generate Report
         run: |
           postman collection run ${{ matrix.config.collection_id }} \
-            --api-key ${{ secrets.POSTMAN_API_KEY }} \
             --environment ${{ matrix.config.environment_id }} \
             --reporters cli,json-summary \
-            --reporter-json-summary-export report-${{ matrix.collection_id }}.json
-      
+            --reporter-json-summary-export report-${{ matrix.config.collection_id }}.json
+
       # HTML 리포트 업로드 (Artifacts)
       - name: Upload Report Artifact for ${{ matrix.config.collection_id }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: report-${{ matrix.config.collection_id }}
-          path: report-${{ matrix.config.collection_id }}.json 
+          path: report-${{ matrix.config.collection_id }}.json
