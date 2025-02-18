@@ -14,7 +14,7 @@ def upload_string_to_s3(data: str, s3_key: str) -> None:
     )
 
 
-def upload_file_to_s3(file_path, key):
+def upload_file_to_s3(file_path, key, remove_after_upload=True):
     s3_hook = S3Hook(aws_conn_id="aws_conn_id")
     s3_hook.load_file(
         filename=file_path,
@@ -23,4 +23,5 @@ def upload_file_to_s3(file_path, key):
         replace=True,
     )
 
-    os.remove(file_path)
+    if remove_after_upload:
+        os.remove(file_path)

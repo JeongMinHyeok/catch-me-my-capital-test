@@ -2,7 +2,8 @@ import json
 import logging
 
 import cloudscraper
-from common.s3_utils import upload_file_to_s3
+
+from dags.common.s3_utils import upload_file_to_s3
 
 logger = logging.getLogger(__name__)
 

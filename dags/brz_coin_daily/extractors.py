@@ -1,7 +1,8 @@
 import csv
 
 import requests
-from common import upload_file_to_s3
+
+from dags.common.s3_utils import upload_file_to_s3
 
 
 def fetch_coin_data(symbols, coin_tmp_file_path, coin_data_s3_key, **kwargs):
@@ -63,6 +64,5 @@ def fetch_coin_data(symbols, coin_tmp_file_path, coin_data_s3_key, **kwargs):
 
     # S3에 업로드
     upload_file_to_s3(
-        key=coin_data_s3_key,
-        file_path=coin_tmp_file_path,
+        key=coin_data_s3_key, file_path=coin_tmp_file_path, remove_after_upload=False
     )

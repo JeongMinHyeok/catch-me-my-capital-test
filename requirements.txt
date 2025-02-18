@@ -3,3 +3,12 @@ requests
 bs4
 apache-airflow-providers-amazon
 cloudscraper
+pytest
+pytest-cov
+pytest-mock
+python-dotenv
+apache-airflow==2.9.1
+apache-airflow-providers-postgres
+psycopg2-binary
+moto
+boto3

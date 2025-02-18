@@ -3,7 +3,8 @@ import json
 from datetime import timedelta
 
 import requests
-from common import upload_file_to_s3
+
+from dags.common.s3_utils import upload_file_to_s3
 
 
 def fetch_msci_indices_data(
