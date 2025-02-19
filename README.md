@@ -16,3 +16,11 @@ chmod -R +x ./scripts/  # 스크립트 파일에 실행 권한 부여
 pre-commit install      # pre-commit 설치
 pre-commit install --hook-type commit-msg  # commit-msg 훅 설치
 ```
+
+- 테스트 진행중
+
+```bash
+pytest
+```
+
+
